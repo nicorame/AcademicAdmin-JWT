@@ -1,3 +1,4 @@
+using Api_AdminAcademic;
 using Api_AdminAcademic.Data;
 using Api_AdminAcademic.Mappings;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ContextDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionBd"));
 });
 
+builder.Services.AddMyDependecyGroup();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
