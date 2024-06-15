@@ -28,13 +28,7 @@
 
     <ItemGroup>
       <Folder Include="Controllers\" />
-      <Folder Include="Dtos\" />
-      <Folder Include="Interfaces\" />
-      <Folder Include="Mappings\" />
       <Folder Include="Query\" />
-      <Folder Include="Repository\" />
-      <Folder Include="Response\" />
-      <Folder Include="Service\" />
     </ItemGroup>
 
 </Project>
