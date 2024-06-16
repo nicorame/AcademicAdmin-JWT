@@ -1,6 +1,7 @@
 ﻿using Api_AdminAcademic.Interfaces;
 using Api_AdminAcademic.Interfaces.Service;
 using Api_AdminAcademic.Repository;
+using Api_AdminAcademic.Service.Carreras;
 using Api_AdminAcademic.Service.Roles;
 using Api_AdminAcademic.Service.Usuarios;
 
@@ -14,7 +15,9 @@ public static class ConfigServiceCollectionExtensions
         services.AddScoped<IRolesService, RolesService>();
         services.AddScoped<IUsuariosRepository, UsuariosRepository>();
         services.AddScoped<IUsuariosService, UsuariosService>();
-        
+        services.AddScoped<ICarrerasRepository, CarrerasRepository>();
+        services.AddScoped<ICarreraService, CarrerasService>();
+
         return services;
     }
 }
