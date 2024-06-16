@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dVbKgz8yXhDn99orzjyxL1kDGmaYU4fSICt27ZUoauPwHeCtALU/KgHT+uAtEP6qBvNGRGf/zVfgkpyG//FPWQ==",
+  "dgSpecHash": "c69F/OaioA1YwVLL0MCQX2pNkeGYzLwBtuMc2VuxgUvIPmyQmWSPDqHavj+wWoALUqAWFfGKQI04FOCyOp7CaA==",
   "success": true,
   "projectFilePath": "E:\\WORKSPACE NICO\\AcademicAdmin-JWT\\src\\BackEnd\\src\\Api-AdminAcademic\\Api-AdminAcademic\\Api-AdminAcademic.csproj",
   "expectedPackageFiles": [
