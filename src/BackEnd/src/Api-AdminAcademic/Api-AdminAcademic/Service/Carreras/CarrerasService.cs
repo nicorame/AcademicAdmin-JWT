@@ -47,7 +47,7 @@ public class CarrerasService : ICarreraService
         var existe = await _carrerasRepository.GetById(nuevaCarreraQuery.Id);
         if (existe != null) 
         {
-            response.SetError("Carrera ya registrado", HttpStatusCode.Conflict);
+            response.SetError("Carrera ya registrada", HttpStatusCode.Conflict);
             return response;
         }
 
