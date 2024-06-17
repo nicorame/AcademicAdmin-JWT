@@ -32,32 +32,4 @@ public class CarrerasRepository : ICarrerasRepository
         await _contextDb.SaveChangesAsync();
         return carreras;
     }
-
-    public async Task<Carreras> UpdateCarreras(Carreras carreras)
-    {
-        var carrera = await _contextDb.Carreras.FirstOrDefaultAsync(c => c.Id == carreras.Id);
-        if (carrera == null)
-        {
-            throw new Exception("Carrera no encontrada");
-        }
-
-        carrera.Name = carreras.Name;
-
-        _contextDb.Update(carrera);
-        _contextDb.SaveChanges();
-        return carrera;
-    }
-
-    public async Task<Carreras> DeleteCarreras(Guid id)
-    {
-        var carrera = await _contextDb.Carreras.FirstOrDefaultAsync(c => c.Id == id);
-        if (carrera == null)
-        {
-            throw new Exception("Carrera no encontrada");
-        }
-
-        _contextDb.Remove(carrera);
-        _contextDb.SaveChanges();
-        return carrera;
-    }
 }

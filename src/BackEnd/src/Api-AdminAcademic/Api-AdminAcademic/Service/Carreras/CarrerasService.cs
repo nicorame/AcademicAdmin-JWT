@@ -44,21 +44,21 @@ public class CarrerasService : ICarreraService
     public async Task<ApiResponse<CarrerasDto>> PostCarrera(NuevaCarreraQuery nuevaCarreraQuery)
     {
         var response = new ApiResponse<CarrerasDto>();
-        var existe = await _carrerasRepository.GetById(nuevaCarreraQuery.Id);
-        if (existe != null) 
+        var exists = await _carrerasRepository.GetById(nuevaCarreraQuery.Id);
+        if (exists != null) 
         {
-            response.SetError("Carrera ya registrada", HttpStatusCode.Conflict);
+            response.SetError("Carrera already registered", HttpStatusCode.Conflict);
             return response;
         }
 
-        var nuevaCarrera = new Models.Carreras
+        var newCarrera = new Models.Carreras
         {
             Id = nuevaCarreraQuery.Id,
             Name = nuevaCarreraQuery.Name
         };
 
-        nuevaCarrera = await _carrerasRepository.PostCarreras(nuevaCarrera);
-        response.Data = _mapper.Map<CarrerasDto>(nuevaCarrera);
+        newCarrera = await _carrerasRepository.PostCarreras(newCarrera);
+        response.Data = _mapper.Map<CarrerasDto>(newCarrera);
         return response;
     }
 }
