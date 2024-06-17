@@ -1,6 +1,8 @@
-﻿using Api_AdminAcademic.Dtos;
+﻿using System.Net;
+using Api_AdminAcademic.Dtos;
 using Api_AdminAcademic.Interfaces;
 using Api_AdminAcademic.Interfaces.Service;
+using Api_AdminAcademic.Query;
 using Api_AdminAcademic.Response;
 using AutoMapper;
 
@@ -9,11 +11,13 @@ namespace Api_AdminAcademic.Service.Usuarios;
 public class UsuariosService : IUsuariosService
 {
     private readonly IUsuariosRepository _usuariosRepository;
+    private readonly IRolesRepository _rolesRepository;
     private readonly IMapper _mapper;
 
-    public UsuariosService(IUsuariosRepository usuariosRepository, IMapper mapper)
+    public UsuariosService(IUsuariosRepository usuariosRepository, IMapper mapper, IRolesRepository rolesRepository)
     {
         _usuariosRepository = usuariosRepository;
+        _rolesRepository = rolesRepository;
         _mapper = mapper;
     }
     
@@ -36,6 +40,54 @@ public class UsuariosService : IUsuariosService
         {
             response.Data = _mapper.Map<UsuarioDto>(usuario);
         }
+        return response;
+    }
+
+    public async Task<ApiResponse<UsuarioDto>> PostUsuario(NuevoUsuarioQuery nuevoUsuarioQuery)
+    {
+        var response = new ApiResponse<UsuarioDto>();
+        var usuario = await _usuariosRepository.GetById(nuevoUsuarioQuery.IdUsuario);
+        if (usuario != null)
+        {
+            response.SetError("Usuario ya registrado", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var rol = await _rolesRepository.GetById(nuevoUsuarioQuery.Rol);
+        if (rol == null)
+        {
+            response.SetError("Rol no encontrado", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var nuevoUsuario = new Models.Usuarios
+        {
+            Id = nuevoUsuarioQuery.IdUsuario,
+            Email = nuevoUsuarioQuery.Email,
+            Password = nuevoUsuarioQuery.Password,
+            IdRol = nuevoUsuarioQuery.Rol
+        };
+
+        nuevoUsuario = await _usuariosRepository.PostUsuario(nuevoUsuario);
+        response.Data = _mapper.Map<UsuarioDto>(nuevoUsuario);
+        return response;
+
+    }
+
+    public async Task<ApiResponse<UsuarioDto>> DeleteUsuario(Guid id)
+    {
+        var response = new ApiResponse<UsuarioDto>();
+        var usuario = await _usuariosRepository.GetById(id);
+        if (usuario != null)
+        {
+            usuario = await _usuariosRepository.DeleteUsuario(id);
+            response.Data = _mapper.Map<UsuarioDto>(usuario);
+        }
+        else
+        {
+            response.SetError("Usuario no registrado", HttpStatusCode.NotFound);
+        }
+
         return response;
     }
 }
