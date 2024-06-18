@@ -5,6 +5,7 @@ using Api_AdminAcademic.Repository;
 using Api_AdminAcademic.Service.Alumnos;
 using Api_AdminAcademic.Service.Carreras;
 using Api_AdminAcademic.Service.Cursos;
+using Api_AdminAcademic.Service.Docentes;
 using Api_AdminAcademic.Service.Roles;
 using Api_AdminAcademic.Service.Usuarios;
 
@@ -16,16 +17,21 @@ public static class ConfigServiceCollectionExtensions
     {
         services.AddScoped<IRolesRepository, RolesRepository>();
         services.AddScoped<IRolesService, RolesService>();
-        services.AddScoped<IUsuariosRepository, UsuariosRepository>();
-        services.AddScoped<IUsuariosService, UsuariosService>();
+        
         services.AddScoped<ICarrerasRepository, CarrerasRepository>();
         services.AddScoped<ICarreraService, CarrerasService>();
+        
         services.AddScoped<ICursosRepository, CursosRepository>();
         services.AddScoped<ICursosService, CursosService>();
+        
+        services.AddScoped<IUsuariosRepository, UsuariosRepository>();
+        services.AddScoped<IUsuariosService, UsuariosService>();
+        
         services.AddScoped<IAlumnosRepository, AlumnosRepository>();
         services.AddScoped<IAlumnosService, AlumnoService>();
         
-        
+        services.AddScoped<IDocentesRepository, DocentesRepository>();
+        services.AddScoped<IDocentesService, DocentesService>();
         
         return services;
     }
