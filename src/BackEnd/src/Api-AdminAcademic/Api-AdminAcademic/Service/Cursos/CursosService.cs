@@ -54,6 +54,79 @@ public class CursosService : ICursosService
 
     public async Task<ApiResponse<CursosDto>> PostCurso(NuevoCursoQuery nuevoCursoQuery)
     {
-        throw new NotImplementedException();
+        var response = new ApiResponse<CursosDto>();
+        var existCurso = await _cursosRepository.GetById(nuevoCursoQuery.Id);
+        if (existCurso != null)
+        {
+            response.SetError("Cursos already registered", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var carrera = await _carrerasRepository.GetById(nuevoCursoQuery.Carrera);
+        if (carrera == null)
+        {
+            response.SetError("Carrera does not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var newCurso = new Models.Cursos
+        {
+            Id = nuevoCursoQuery.Id,
+            Name = nuevoCursoQuery.Name,
+            CreationDate = DateTime.Now,
+            Schedules = nuevoCursoQuery.Schedules,
+            Carrera = carrera
+        };
+
+        newCurso = await _cursosRepository.PostCursos(newCurso);
+        response.Data = _mapper.Map<CursosDto>(newCurso);
+
+        return response;
+    }
+
+    public async Task<ApiResponse<CursosDto>> UpdateCurso(UpdateCursoQuery updateCursoQuery)
+    {
+        var response = new ApiResponse<CursosDto>();
+        var existCurso = await _cursosRepository.GetById(updateCursoQuery.Id);
+        if (existCurso == null)
+        {
+            response.SetError("Cursos do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var carrera = await _carrerasRepository.GetById(updateCursoQuery.Carrera);
+        if (carrera == null)
+        {
+            response.SetError("Carrera do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var updateCurso = new Models.Cursos
+        {
+            Id = updateCursoQuery.Id,
+            Name = updateCursoQuery.Name,
+            CreationDate = DateTime.Now,
+            Schedules = updateCursoQuery.Schedules,
+            Carrera = carrera
+        };
+
+        updateCurso = await _cursosRepository.UpdateCursos(updateCurso);
+        response.Data = _mapper.Map<CursosDto>(updateCurso);
+        return response;
+    }
+
+    public async Task<ApiResponse<CursosDto>> DeleteCurso(Guid id)
+    {
+        var response = new ApiResponse<CursosDto>();
+        var curso = await _cursosRepository.GetById(id);
+        if (curso == null)
+        {
+            response.SetError("Cursos do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        curso = await _cursosRepository.DeleteCursos(id);
+        response.Data = _mapper.Map<CursosDto>(curso);
+        return response;
     }
 }

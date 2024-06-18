@@ -10,4 +10,7 @@ public interface ICursosService
     Task<ApiResponse<List<CursosDto>>> GetAll();
     Task<ApiResponse<CursosDto>> GetById(Guid id);
     Task<ApiResponse<CursosDto>> PostCurso(NuevoCursoQuery nuevoCursoQuery);
+    Task<ApiResponse<CursosDto>> UpdateCurso(UpdateCursoQuery updateCursoQuery);
+    Task<ApiResponse<CursosDto>> DeleteCurso(Guid id);
+
 }
