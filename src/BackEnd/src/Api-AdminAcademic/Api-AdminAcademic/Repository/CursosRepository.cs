@@ -36,4 +36,34 @@ public class CursosRepository : ICursosRepository
         await _contextDb.SaveChangesAsync();
         return curso;
     }
+
+    public async Task<Cursos> UpdateCursos(Cursos cursos)
+    {
+        var curso = await _contextDb.Cursos
+            .Include(c => c.Carrera)
+            .FirstOrDefaultAsync(c => c.Id == cursos.Id);
+
+        
+        curso.Id = cursos.Id;
+        curso.Name = cursos.Name;
+        curso.CreationDate = cursos.CreationDate;
+        curso.Schedules = cursos.Schedules;
+        curso.Carrera = cursos.Carrera;
+
+        _contextDb.Update(curso);
+        _contextDb.SaveChanges();
+
+        return curso;
+    }
+
+    public async Task<Cursos> DeleteCursos(Guid id)
+    {
+        var curso = await _contextDb.Cursos
+            .Include(c => c.Carrera)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        _contextDb.Remove(curso);
+        _contextDb.SaveChanges();
+        return curso;
+    }
 }
