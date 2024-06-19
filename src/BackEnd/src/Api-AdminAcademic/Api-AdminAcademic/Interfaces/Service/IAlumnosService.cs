@@ -10,5 +10,6 @@ public interface IAlumnosService
     Task<ApiResponse<List<AlumnoDto>>> GetAll();
     Task<ApiResponse<AlumnoDto>> GetById(Guid id);
     Task<ApiResponse<AlumnoDto>> PostAlumno(NuevoAlumnoQuery nuevoAlumnoQuery);
-    
+    Task<ApiResponse<AlumnoDto>> UpdateAlumno(UpdateAlumnoQuery updateAlumnoQuery);
+    Task<ApiResponse<AlumnoDto>> DeleteAlumno(Guid id);
 }

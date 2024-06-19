@@ -38,4 +38,34 @@ public class AlumnosRepository : IAlumnosRepository
         await _contextDb.SaveChangesAsync();
         return alumnos;
     }
+
+    public async Task<Alumnos> UpdateAlumno(Alumnos alumnos)
+    {
+        var alumno = await _contextDb.Alumnos
+            .Include(c => c.Rol)
+            .FirstOrDefaultAsync(c => c.Id == alumnos.Id);
+
+        alumno.Id = alumnos.Id;
+        alumno.Name = alumnos.Name;
+        alumno.LastName = alumnos.LastName;
+        alumno.File = alumnos.File;
+        alumno.Rol = alumnos.Rol;
+
+        _contextDb.Update(alumno);
+        _contextDb.SaveChanges();
+
+        return alumno;
+    }
+
+    public async Task<Alumnos> DeleteAlumno(Guid id)
+    {
+        var alumno = await _contextDb.Alumnos
+            .Include(c => c.Rol)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        _contextDb.Remove(alumno);
+        _contextDb.SaveChanges();
+        
+        return alumno;
+    }
 }
