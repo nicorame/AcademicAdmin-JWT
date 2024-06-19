@@ -1,5 +1,6 @@
 ﻿using Api_AdminAcademic.Interfaces.Service;
 using Api_AdminAcademic.Query;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,18 +15,31 @@ public class UsuarioController : Controller
         _usuariosService = usuariosService;
     }
 
-    [HttpGet("/usuarios/GetAll")]
+    [HttpGet("/usuarios/GetAll"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
         var response = await _usuariosService.GetAll();
         return Ok(response);
     }
 
-    [HttpGet("/usuarios/GetById/{id}")]
+    [HttpGet("/usuarios/GetById/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var response = await _usuariosService.GetById(id);
         return Ok(response);
+    }
+
+    [HttpPost("/usuarios/login")]
+    public async Task<IActionResult> Login([FromBody] LoginQuery query)
+    {
+        if (query.Email == "" || query.Password == "")
+        {
+            return BadRequest("Todos los campos son obligatorios");
+        }
+
+        var result = await _usuariosService.Login(query.Email.Trim(), query.Password.Trim());
+
+        return Ok(result);
     }
 
     [HttpPost("/usuarios/post")]

@@ -30,6 +30,14 @@ public class UsuariosRepository : IUsuariosRepository
         return usuario;
     }
 
+    public async Task<Usuarios> GetByEmailAndPassword(string email, string password)
+    {
+        var usuario = await _contextDb.Usuarios
+            .Include(c => c.Rol)
+            .FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
+        return usuario;
+    }
+
     public async Task<Usuarios> PostUsuario(Usuarios usuario)
     {
         await _contextDb.AddAsync(usuario);
