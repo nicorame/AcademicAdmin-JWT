@@ -36,4 +36,14 @@ public class DocentesRepository : IDocentesRepository
         await _contextDb.SaveChangesAsync();
         return docente;
     }
+
+    public async Task<Docentes> UpdateDocentes(Docentes docente)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Docentes> DeleteDocentes(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }
