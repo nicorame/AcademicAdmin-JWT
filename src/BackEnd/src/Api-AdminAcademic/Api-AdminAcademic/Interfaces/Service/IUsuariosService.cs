@@ -9,6 +9,7 @@ public interface IUsuariosService
 {
     Task<ApiResponse<List<UsuarioDto>>> GetAll();
     Task<ApiResponse<UsuarioDto>> GetById(Guid id);
+    Task<ApiResponse<LoginDto>> Login(string email, string password);
     Task<ApiResponse<UsuarioDto>> PostUsuario(NuevoUsuarioQuery nuevoUsuarioQuery);
     Task<ApiResponse<UsuarioDto>> DeleteUsuario(Guid id);
 }
