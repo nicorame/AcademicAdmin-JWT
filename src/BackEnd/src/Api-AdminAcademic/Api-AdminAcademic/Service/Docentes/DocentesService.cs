@@ -83,4 +83,51 @@ public class DocentesService : IDocentesService
         response.Data = _mapper.Map<DocenteDto>(newDocente);
         return response;
     }
+
+    public async Task<ApiResponse<DocenteDto>> UpdateDocente(UpdateDocenteQuery updateDocenteQuery)
+    {
+        var response = new ApiResponse<DocenteDto>();
+        var docente = await _docenteRepository.GetById(updateDocenteQuery.Id);
+        if (docente == null)
+        {
+            response.SetError("Docente do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+        var rol = await _rolesRepository.GetById(updateDocenteQuery.Rol);
+        if (rol == null)
+        {
+            response.SetError("Rol do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        var updateDocente = new Models.Docentes()
+        {
+            Id = updateDocenteQuery.Id,
+            Name = updateDocenteQuery.Name,
+            LastName = updateDocenteQuery.LastName,
+            File = updateDocenteQuery.File,
+            Rol = rol
+        };
+
+        updateDocente = await _docenteRepository.UpdateDocentes(updateDocente);
+        response.Data = _mapper.Map<DocenteDto>(updateDocente);
+
+        return response;
+    }
+
+    public async Task<ApiResponse<DocenteDto>> DeleteDocente(Guid id)
+    {
+        var response = new ApiResponse<DocenteDto>();
+        var docente = await _docenteRepository.GetById(id);
+        if (docente == null)
+        {
+            response.SetError("Alumno do not exist", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        docente = await _docenteRepository.DeleteDocentes(id);
+        response.Data = _mapper.Map<DocenteDto>(docente);
+        
+        return response;
+    }
 }

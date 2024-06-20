@@ -9,4 +9,6 @@ public interface IDocentesService
     Task<ApiResponse<List<DocenteDto>>> GetAll();
     Task<ApiResponse<DocenteDto>> GetById(Guid id);
     Task<ApiResponse<DocenteDto>> PostDocente(NuevoDocenteQuery nuevoDocenteQuery);
+    Task<ApiResponse<DocenteDto>> UpdateDocente(UpdateDocenteQuery updateDocenteQuery);
+    Task<ApiResponse<DocenteDto>> DeleteDocente(Guid id);
 }
