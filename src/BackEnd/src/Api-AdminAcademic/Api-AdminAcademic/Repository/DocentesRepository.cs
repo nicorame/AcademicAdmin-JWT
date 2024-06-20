@@ -39,11 +39,30 @@ public class DocentesRepository : IDocentesRepository
 
     public async Task<Docentes> UpdateDocentes(Docentes docente)
     {
-        throw new NotImplementedException();
+        var docentes = await _contextDb.Docentes
+            .Include(c => c.Rol)
+            .FirstOrDefaultAsync(c => c.Id == docente.Id);
+        
+        docentes.Id = docente.Id;
+        docentes.Name = docente.Name;
+        docentes.LastName = docente.LastName;
+        docentes.File = docente.File;
+        docentes.Rol = docente.Rol;
+
+        _contextDb.Update(docentes);
+        _contextDb.SaveChanges();
+        return docentes;
     }
 
     public async Task<Docentes> DeleteDocentes(Guid id)
     {
-        throw new NotImplementedException();
+        var docente = await _contextDb.Docentes
+            .Include(c => c.Rol)
+            .FirstOrDefaultAsync(c => c.Id == id);
+        
+        _contextDb.Remove(docente);
+        _contextDb.SaveChanges();
+        
+        return docente;
     }
 }
