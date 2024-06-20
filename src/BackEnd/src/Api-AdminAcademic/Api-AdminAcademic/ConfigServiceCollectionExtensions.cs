@@ -3,6 +3,7 @@ using Api_AdminAcademic.Interfaces.Service;
 using Api_AdminAcademic.Models;
 using Api_AdminAcademic.Repository;
 using Api_AdminAcademic.Service.Alumnos;
+using Api_AdminAcademic.Service.AlumnoXCurso;
 using Api_AdminAcademic.Service.Carreras;
 using Api_AdminAcademic.Service.Cursos;
 using Api_AdminAcademic.Service.Docentes;
@@ -32,6 +33,9 @@ public static class ConfigServiceCollectionExtensions
         
         services.AddScoped<IDocentesRepository, DocentesRepository>();
         services.AddScoped<IDocentesService, DocentesService>();
+
+        services.AddScoped<IAlumnosXCursosRepository, AlumnosXCursosRepository>();
+        services.AddScoped<IAlumnosXCursosService, AlumnosXCursosService>();
         
         return services;
     }

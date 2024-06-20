@@ -11,8 +11,15 @@ public class MappingProfile : Profile
         CreateMap<Roles, RolesDto>();
         CreateMap<Usuarios, UsuarioDto>();
         CreateMap<Carreras, CarrerasDto>();
+
         CreateMap<Cursos, CursosDto>();
+        CreateMap<Cursos, CursoDtoForList>();
+
         CreateMap<Alumnos, AlumnoDto>();
+        CreateMap<Alumnos, AlumnoDtoForList>();
+
         CreateMap<Docentes, DocenteDto>();
+
+        CreateMap<AlumnosXCursos, AlumnoXCrusoDto>();
     }
 }
