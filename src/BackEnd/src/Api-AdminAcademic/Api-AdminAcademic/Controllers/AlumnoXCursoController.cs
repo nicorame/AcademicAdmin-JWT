@@ -1,6 +1,7 @@
 ﻿using Api_AdminAcademic.Dtos;
 using Api_AdminAcademic.Interfaces.Service;
 using Api_AdminAcademic.Query;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api_AdminAcademic.Controllers;
@@ -15,7 +16,7 @@ public class AlumnoXCursoController : Controller
         _alumnosXCursosService = alumnosXCursosService;
     }
 
-    [HttpGet("alumnosXcursos/GetAll")]
+    [HttpGet("alumnosXcursos/GetAll"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _alumnosXCursosService.GetAll();
@@ -29,14 +30,14 @@ public class AlumnoXCursoController : Controller
         return Ok(result);
     }
 
-    [HttpPost("alumnosXcursos/Post")]
+    [HttpPost("alumnosXcursos/Post"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Post([FromBody] NewAlumnoXCurso query)
     {
         var response = await _alumnosXCursosService.PostAlumnoXcurso(query);
         return Ok(response);
     }
 
-    [HttpDelete("alumnosXcursos/Delete/{idAlumno}/{idCurso}")]
+    [HttpDelete("alumnosXcursos/Delete/{idAlumno}/{idCurso}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid idAlumno, Guid idCurso)
     {
         var response = await _alumnosXCursosService.DeleteAlumnoXCurso(idAlumno, idCurso);
