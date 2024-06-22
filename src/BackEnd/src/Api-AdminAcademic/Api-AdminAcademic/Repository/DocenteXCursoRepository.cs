@@ -33,6 +33,15 @@ public class DocenteXCursoRepository : IDocenteXCursoRepository
         return docenteXcurso;
     }
 
+    public async Task<DocentesXCursos> GetByIdDocenteAndIdCurso(Guid idCurso, Guid idDocente)
+    {
+        var docenteXcurso = await _contextDb.DocentesXCursos
+            .Include(d => d.Curso)
+            .Include(d => d.Docente)
+            .FirstOrDefaultAsync(d => d.IdDocente == idDocente && d.IdCurso == idCurso);
+        return docenteXcurso;
+    }
+
     public async Task<DocentesXCursos> PostDocenteXCurso(DocentesXCursos docentesXCursos)
     {
         await _contextDb.AddAsync(docentesXCursos);
@@ -46,6 +55,19 @@ public class DocenteXCursoRepository : IDocenteXCursoRepository
             .Include(d => d.Curso)
             .Include(d => d.Docente)
             .FirstOrDefaultAsync(d => d.IdCurso == idCurso && d.IdDocente == idDocente);
+        return docenteXcurso;
+    }
+
+    public async Task<DocentesXCursos> DeleteDocenteXCurso(Guid idCurso, Guid idDocente)
+    {
+        var docenteXcurso = await _contextDb.DocentesXCursos
+            .Include(d => d.Curso)
+            .Include(d => d.Docente)
+            .FirstOrDefaultAsync(d => d.IdDocente == idDocente && d.IdCurso == idCurso);
+
+        _contextDb.Remove(docenteXcurso);
+        _contextDb.SaveChanges();
+        
         return docenteXcurso;
     }
 }

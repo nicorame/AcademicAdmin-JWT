@@ -127,4 +127,18 @@ public class AlumnosXCursosService : IAlumnosXCursosService
         response.Data = _mapper.Map<AlumnoXCrusoDto>(alumnoXcurso);
         return response;
     }
+
+    public async Task<ApiResponse<AlumnoXCrusoDto>> DeleteAlumnoXCurso(Guid idAlumno, Guid idCurso)
+    {
+        var response = new ApiResponse<AlumnoXCrusoDto>();
+        var alumnoXcurso =  await _alumnosXCursosRepository.GetAlumnoByIdAndIdCurso(idAlumno, idCurso);
+        if (alumnoXcurso == null)
+        {
+            response.SetError("Alumno no esta registrado en este curso", HttpStatusCode.Conflict);
+            return response;
+        }
+        alumnoXcurso = await _alumnosXCursosRepository.DeleteAlumno(idAlumno, idCurso);
+        response.Data = _mapper.Map<AlumnoXCrusoDto>(alumnoXcurso);
+        return response;
+    }
 }

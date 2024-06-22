@@ -29,5 +29,8 @@ public class MappingProfile : Profile
         CreateMap<Cursos, CursosDtoForAlumnosXcurso>();
         CreateMap<Cursos, CursosDtoForDocentesXCurso>();
         CreateMap<Docentes, DocenteDtoForDocenteXcurso>();
+
+        CreateMap<AlumnosXCursos, AlumnoXCursoDtoForDelete>();
+        CreateMap<DocentesXCursos, DocenteXCursoDtoForDelete>();
     }
 }

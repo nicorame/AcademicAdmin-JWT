@@ -34,6 +34,16 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
         return alumnoXcurso;
     }
 
+    public async Task<AlumnosXCursos> GetAlumnoByIdAndIdCurso(Guid idAlumno, Guid idCurso)
+    {
+        var alumnoXcurso = await _contextDb.AlumnosXCursos
+            .Include(a => a.Alumno)
+            .Include(a => a.Curso)
+            .FirstOrDefaultAsync(a => a.IdAlumno == idAlumno && a.IdCurso == idCurso);
+
+        return alumnoXcurso;
+    }
+
     public async Task<AlumnosXCursos> PostAlumnoXCurso(AlumnosXCursos alumnosXCursos)
     {
         await _contextDb.AddAsync(alumnosXCursos);
@@ -45,5 +55,17 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
     {
         return await _contextDb.AlumnosXCursos
             .AnyAsync(a => a.IdCurso == idCurso && a.IdAlumno == idAlumno);
+    }
+
+    public async Task<AlumnosXCursos> DeleteAlumno(Guid idAlumno, Guid idCurso)
+    {
+        var alumnoXcurso = await _contextDb.AlumnosXCursos
+            .Include(a => a.Alumno)
+            .Include(a => a.Curso)
+            .FirstOrDefaultAsync(a => a.IdAlumno == idAlumno && a.IdCurso ==idCurso);
+
+        _contextDb.Remove(alumnoXcurso);
+        await _contextDb.SaveChangesAsync();
+        return alumnoXcurso;
     }
 }

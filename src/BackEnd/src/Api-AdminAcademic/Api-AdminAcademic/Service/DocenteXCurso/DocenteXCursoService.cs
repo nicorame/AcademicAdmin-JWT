@@ -126,4 +126,19 @@ public class DocenteXCursoService : IDocenteXCursoService
         response.Data = _mapper.Map<DocenteXCursoDto>(docenteXcurso);
         return response;
     }
+
+    public async Task<ApiResponse<DocenteXCursoDto>> DeleteDocenteXcurso(Guid idCurso, Guid idDocente)
+    {
+        var response = new ApiResponse<DocenteXCursoDto>();
+        var docenteXcurso = await _docenteXCursoRepository.GetByIdCursoAndIdDocente(idCurso, idDocente);
+        if (docenteXcurso == null)
+        {
+            response.SetError("El docente no esta registrado en el curos", HttpStatusCode.Conflict);
+            return response;
+        }
+
+        docenteXcurso = await _docenteXCursoRepository.DeleteDocenteXCurso(idCurso, idDocente);
+        response.Data = _mapper.Map<DocenteXCursoDto>(docenteXcurso);
+        return response;
+    }
 }

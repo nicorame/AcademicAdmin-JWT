@@ -1,4 +1,5 @@
-﻿using Api_AdminAcademic.Interfaces.Service;
+﻿using Api_AdminAcademic.Dtos;
+using Api_AdminAcademic.Interfaces.Service;
 using Api_AdminAcademic.Query;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,13 @@ public class AlumnoXCursoController : Controller
     public async Task<IActionResult> Post([FromBody] NewAlumnoXCurso query)
     {
         var response = await _alumnosXCursosService.PostAlumnoXcurso(query);
+        return Ok(response);
+    }
+
+    [HttpDelete("alumnosXcursos/Delete/{idAlumno}/{idCurso}")]
+    public async Task<IActionResult> Delete(Guid idAlumno, Guid idCurso)
+    {
+        var response = await _alumnosXCursosService.DeleteAlumnoXCurso(idAlumno, idCurso);
         return Ok(response);
     }
 }
