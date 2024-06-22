@@ -33,4 +33,10 @@ public class DocenteXCursoController : Controller
         var response = await _docenteXCursoService.PostDocenteXcurso(query);
         return Ok(response);
     }
+    [HttpDelete("docenteXcurso/Delete/{idCurso}/{idDocente}")]
+    public async Task<IActionResult> Delete(Guid idCurso, Guid idDocente)
+    {
+        var response = await _docenteXCursoService.DeleteDocenteXcurso(idCurso, idDocente);
+        return Ok(response);
+    }
 }
