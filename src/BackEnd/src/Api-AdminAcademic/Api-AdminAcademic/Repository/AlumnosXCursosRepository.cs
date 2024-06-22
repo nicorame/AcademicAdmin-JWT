@@ -33,6 +33,17 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
             .ToListAsync();
         return alumnoXcurso;
     }
+
+    public async Task<AlumnosXCursos> PostAlumnoXCurso(AlumnosXCursos alumnosXCursos)
+    {
+        await _contextDb.AddAsync(alumnosXCursos);
+        await _contextDb.SaveChangesAsync();
+        return alumnosXCursos;
+    }
     
-    
+    public async Task<bool> IsAlumnoInCurso(Guid idCurso, Guid idAlumno)
+    {
+        return await _contextDb.AlumnosXCursos
+            .AnyAsync(a => a.IdCurso == idCurso && a.IdAlumno == idAlumno);
+    }
 }

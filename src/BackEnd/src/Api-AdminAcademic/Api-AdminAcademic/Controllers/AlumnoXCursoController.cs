@@ -1,4 +1,5 @@
 ﻿using Api_AdminAcademic.Interfaces.Service;
+using Api_AdminAcademic.Query;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api_AdminAcademic.Controllers;
@@ -25,6 +26,12 @@ public class AlumnoXCursoController : Controller
     {
         var result = await _alumnosXCursosService.GetByCurso(id);
         return Ok(result);
-        
+    }
+
+    [HttpPost("alumnosXcursos/Post")]
+    public async Task<IActionResult> Post([FromBody] NewAlumnoXCurso query)
+    {
+        var response = await _alumnosXCursosService.PostAlumnoXcurso(query);
+        return Ok(response);
     }
 }
