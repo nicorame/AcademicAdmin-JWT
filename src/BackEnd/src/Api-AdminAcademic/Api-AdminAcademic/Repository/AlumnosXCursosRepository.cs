@@ -1,4 +1,5 @@
 ﻿using Api_AdminAcademic.Data;
+using Api_AdminAcademic.Dtos;
 using Api_AdminAcademic.Interfaces;
 using Api_AdminAcademic.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,16 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
     {
         _contextDb = contextDb;
     }
-    
+
+    public async Task<List<AlumnosXCursos>> GetAll()
+    {
+        var alumnoXcurso = await _contextDb.AlumnosXCursos
+            .Include(a => a.Alumno)
+            .Include(a => a.Curso)
+            .ToListAsync();
+        return alumnoXcurso;
+    }
+
     public async Task<List<AlumnosXCursos>> GetByCurso(Guid id)
     {
         var alumnoXcurso = await _contextDb.AlumnosXCursos
@@ -23,4 +33,6 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
             .ToListAsync();
         return alumnoXcurso;
     }
+    
+    
 }
