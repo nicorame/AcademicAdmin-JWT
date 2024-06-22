@@ -2,6 +2,8 @@
 using Api_AdminAcademic.Dtos;
 using Api_AdminAcademic.Interfaces;
 using Api_AdminAcademic.Interfaces.Service;
+using Api_AdminAcademic.Models;
+using Api_AdminAcademic.Query;
 using Api_AdminAcademic.Response;
 using AutoMapper;
 
@@ -11,12 +13,14 @@ public class AlumnosXCursosService : IAlumnosXCursosService
 {
     private readonly IAlumnosXCursosRepository _alumnosXCursosRepository;
     private readonly ICursosRepository _cursosRepository;
+    private readonly IAlumnosRepository _alumnosRepository;
     private readonly IMapper _mapper;
 
-    public AlumnosXCursosService(IAlumnosXCursosRepository alumnosXCursosRepository, IMapper mapper, ICursosRepository cursosRepository)
+    public AlumnosXCursosService(IAlumnosXCursosRepository alumnosXCursosRepository, IMapper mapper, ICursosRepository cursosRepository, IAlumnosRepository alumnosRepository)
     {
         _alumnosXCursosRepository = alumnosXCursosRepository;
         _cursosRepository = cursosRepository;
+        _alumnosRepository = alumnosRepository;
         _mapper = mapper;
     }
 
@@ -84,6 +88,43 @@ public class AlumnosXCursosService : IAlumnosXCursosService
         };
 
         response.Data = cursoDto;
+        return response;
+    }
+
+    public async Task<ApiResponse<AlumnoXCrusoDto>> PostAlumnoXcurso(NewAlumnoXCurso newAlumnoXCurso)
+    {
+        var response = new ApiResponse<AlumnoXCrusoDto>();
+        var curso = await _cursosRepository.GetById(newAlumnoXCurso.Curso);
+        if (curso == null)
+        {
+            response.SetError("Curso no encontrado", HttpStatusCode.NotFound);
+            return response;
+        }
+
+        var alumno = await _alumnosRepository.GetById(newAlumnoXCurso.Alumno);
+        if (curso == null)
+        {
+            response.SetError("Alumno no encontrado", HttpStatusCode.NotFound);
+            return response;
+        }
+        
+        var exists = await _alumnosXCursosRepository.IsAlumnoInCurso(newAlumnoXCurso.Curso, newAlumnoXCurso.Alumno);
+        if (exists)
+        {
+            response.SetError("El alumno ya está inscrito en el curso", HttpStatusCode.BadRequest);
+            return response;
+        }
+
+        var alumnoXcurso = new AlumnosXCursos()
+        {
+            Id = Guid.NewGuid(),
+            Curso = curso,
+            Alumno = alumno,
+            DateAdded = DateTime.Today
+        };
+
+        alumnoXcurso = await _alumnosXCursosRepository.PostAlumnoXCurso(alumnoXcurso);
+        response.Data = _mapper.Map<AlumnoXCrusoDto>(alumnoXcurso);
         return response;
     }
 }

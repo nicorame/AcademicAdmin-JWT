@@ -2,5 +2,6 @@
 
 public class AlumnoXCrusoDto
 {
-    public CursoDtoForList Curso { get; set; }
+    public CursosDtoForAlumnosXcurso Curso { get; set; }
+    public AlumnoDtoForAlumnosXcurso Alumno { get; set; }
 }

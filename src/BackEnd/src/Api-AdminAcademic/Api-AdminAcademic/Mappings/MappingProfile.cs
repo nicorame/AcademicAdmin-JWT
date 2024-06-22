@@ -21,5 +21,8 @@ public class MappingProfile : Profile
         CreateMap<Docentes, DocenteDto>();
 
         CreateMap<AlumnosXCursos, AlumnoXCrusoDto>();
+
+        CreateMap<Alumnos, AlumnoDtoForAlumnosXcurso>();
+        CreateMap<Cursos, CursosDtoForAlumnosXcurso>();
     }
 }
