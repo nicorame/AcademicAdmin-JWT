@@ -14,15 +14,20 @@ public class MappingProfile : Profile
 
         CreateMap<Cursos, CursosDto>();
         CreateMap<Cursos, CursoDtoForList>();
+        CreateMap<Cursos, CursoDtoForListDocente>();
 
         CreateMap<Alumnos, AlumnoDto>();
         CreateMap<Alumnos, AlumnoDtoForList>();
 
         CreateMap<Docentes, DocenteDto>();
-
+        CreateMap<Docentes, DocenteDtoForList>();
+        
         CreateMap<AlumnosXCursos, AlumnoXCrusoDto>();
-
+        CreateMap<DocentesXCursos, DocenteXCursoDto>();
+        
         CreateMap<Alumnos, AlumnoDtoForAlumnosXcurso>();
         CreateMap<Cursos, CursosDtoForAlumnosXcurso>();
+        CreateMap<Cursos, CursosDtoForDocentesXCurso>();
+        CreateMap<Docentes, DocenteDtoForDocenteXcurso>();
     }
 }
