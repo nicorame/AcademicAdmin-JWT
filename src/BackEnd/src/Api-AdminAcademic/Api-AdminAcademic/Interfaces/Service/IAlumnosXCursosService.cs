@@ -5,5 +5,6 @@ namespace Api_AdminAcademic.Interfaces.Service;
 
 public interface IAlumnosXCursosService
 {
-    Task<ApiResponse<List<AlumnoXCrusoDto>>> GetByCurso(Guid id);
+    Task<ApiResponse<List<CursoDtoForList>>> GetAll();
+    Task<ApiResponse<CursoDtoForList>> GetByCurso(Guid id);
 }

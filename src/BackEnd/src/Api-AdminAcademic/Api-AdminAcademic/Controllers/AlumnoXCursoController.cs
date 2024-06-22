@@ -13,10 +13,18 @@ public class AlumnoXCursoController : Controller
         _alumnosXCursosService = alumnosXCursosService;
     }
 
-    [HttpGet("/alumnosXCurso/GetByCurso/{id}")]
-    public async Task<IActionResult> GetByCurso(Guid id)
+    [HttpGet("alumnosXcursos/GetAll")]
+    public async Task<IActionResult> GetAll()
     {
-        var response = await _alumnosXCursosService.GetByCurso(id);
-        return Ok(response);
+        var result = await _alumnosXCursosService.GetAll();
+        return Ok(result);
+    }
+    
+    [HttpGet("alumnosXcursos/GetAlumnosPorCurso/{id}")]
+    public async Task<IActionResult> GetByCursoDos(Guid id)
+    {
+        var result = await _alumnosXCursosService.GetByCurso(id);
+        return Ok(result);
+        
     }
 }
