@@ -44,13 +44,15 @@ public class AlumnosXCursosService : IAlumnosXCursosService
         
         var cursosDto = cursos.Select(curso => new CursoDtoForList
         {
+            Id = curso.Id,
             Name = curso.Name,
             Alumnos = alumnosXcursos
                 .Where(ac => ac.IdCurso == curso.Id)
                 .Select(ac => new AlumnoDtoForList
                 {
                     Name = ac.Alumno.Name,
-                    LastName = ac.Alumno.LastName
+                    LastName = ac.Alumno.LastName,
+                    File = ac.Alumno.File
                 }).ToList()
         }).ToList();
 
@@ -79,11 +81,13 @@ public class AlumnosXCursosService : IAlumnosXCursosService
 
         var cursoDto = new CursoDtoForList
         {
+            Id = curso.Id,
             Name = curso.Name,
             Alumnos = alumnoXcurso.Select(ac => new AlumnoDtoForList
             {
                 Name = ac.Alumno.Name,
-                LastName = ac.Alumno.LastName
+                LastName = ac.Alumno.LastName,
+                File = ac.Alumno.File
             }).ToList()
         };
 

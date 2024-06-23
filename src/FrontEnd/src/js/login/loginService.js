@@ -45,12 +45,9 @@ function login(email, password) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Response from server:', data);
         if(data.success) {
             const token = data.data.token
-
             localStorage.setItem("token", token)
-
             $(location).attr('href', 'http://127.0.0.1:5500/index.html')
         } else {
             Swal.fire({
