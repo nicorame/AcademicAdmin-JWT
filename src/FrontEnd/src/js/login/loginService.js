@@ -25,8 +25,6 @@ $(document).ready(function(){
         if($('#loginInput').valid()){
             const email = $('#idEmail').val()
             const password = $('#idPassword').val()
-            
-            
             login(email, password)
         }
     })
