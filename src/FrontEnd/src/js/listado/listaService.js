@@ -30,7 +30,7 @@ function listarCursos() {
                 fila.innerHTML += `<td>${nombreDocente}</td>`;
                 fila.innerHTML += ` <td>    
                                         <a type="button" class="btn btn-warning m-2" href="verAlumnos.html?id=${idCurso}">Ver Alumnos</a>
-                                        <a type="button" class="btn btn-success m-2" href="agregar.html">Agregar</a>
+                                        <a type="button" class="btn btn-success m-2" href="agregar.html?id=${idCurso}">Agregar</a>
                                     </td>`
                 body.append(fila)
             });
