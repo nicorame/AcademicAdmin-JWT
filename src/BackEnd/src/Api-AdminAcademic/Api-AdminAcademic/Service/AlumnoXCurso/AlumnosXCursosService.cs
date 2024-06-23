@@ -85,6 +85,7 @@ public class AlumnosXCursosService : IAlumnosXCursosService
             Name = curso.Name,
             Alumnos = alumnoXcurso.Select(ac => new AlumnoDtoForList
             {
+                Id = ac.Alumno.Id,
                 Name = ac.Alumno.Name,
                 LastName = ac.Alumno.LastName,
                 File = ac.Alumno.File
