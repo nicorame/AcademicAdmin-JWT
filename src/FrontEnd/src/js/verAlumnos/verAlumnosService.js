@@ -14,7 +14,7 @@ function listarCursoById() {
 
             response.data.alumnos.forEach(alumno => {
                 let idAlumno = alumno.id
-
+                console.log(idAlumno)
                 const fila = document.createElement("tr")
 
                 fila.innerHTML += `<td>${alumno.name}</td>`;
