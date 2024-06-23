@@ -96,6 +96,35 @@ public class AlumnosXCursosService : IAlumnosXCursosService
         return response;
     }
 
+    public async Task<ApiResponse<AlumnoDtoForList>> GetAlumnoEnCurso(Guid idCurso, Guid idAlumno)
+    {
+        var response = new ApiResponse<AlumnoDtoForList>();
+        var alumno = await _alumnosRepository.GetById(idAlumno);
+        if (alumno == null)
+        {
+            response.SetError("Alumno no encontrado", HttpStatusCode.NotFound);
+            return response;
+        }
+        
+        var exists = await _alumnosXCursosRepository.IsAlumnoInCurso(idCurso, idAlumno);
+        if (exists != null)
+        {
+            response.SetError("El alumno ya está inscrito en el curso", HttpStatusCode.BadRequest);
+            return response;
+        }
+
+        var alumnoDto = new AlumnoDtoForList()
+        {
+            Id = alumno.Id,
+            Name = alumno.Name,
+            LastName = alumno.LastName,
+            File = alumno.File
+        };
+        
+        response.Data = alumnoDto;
+        return response;
+    }
+
     public async Task<ApiResponse<AlumnoXCrusoDto>> PostAlumnoXcurso(NewAlumnoXCurso newAlumnoXCurso)
     {
         var response = new ApiResponse<AlumnoXCrusoDto>();
@@ -107,14 +136,14 @@ public class AlumnosXCursosService : IAlumnosXCursosService
         }
 
         var alumno = await _alumnosRepository.GetById(newAlumnoXCurso.Alumno);
-        if (curso == null)
+        if (alumno == null)
         {
             response.SetError("Alumno no encontrado", HttpStatusCode.NotFound);
             return response;
         }
         
         var exists = await _alumnosXCursosRepository.IsAlumnoInCurso(newAlumnoXCurso.Curso, newAlumnoXCurso.Alumno);
-        if (exists)
+        if (exists != null)
         {
             response.SetError("El alumno ya está inscrito en el curso", HttpStatusCode.BadRequest);
             return response;

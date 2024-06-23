@@ -9,6 +9,7 @@ public interface IAlumnosXCursosService
 {
     Task<ApiResponse<List<CursoDtoForList>>> GetAll();
     Task<ApiResponse<CursoDtoForList>> GetByCurso(Guid id);
+    Task<ApiResponse<AlumnoDtoForList>> GetAlumnoEnCurso(Guid idCurso, Guid idAlumno);
     Task<ApiResponse<AlumnoXCrusoDto>> PostAlumnoXcurso(NewAlumnoXCurso newAlumnoXCurso);
     Task<ApiResponse<AlumnoXCrusoDto>> DeleteAlumnoXCurso(Guid idAlumno, Guid idCurso);
 }

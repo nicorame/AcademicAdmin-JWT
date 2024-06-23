@@ -51,10 +51,13 @@ public class AlumnosXCursosRepository : IAlumnosXCursosRepository
         return alumnosXCursos;
     }
     
-    public async Task<bool> IsAlumnoInCurso(Guid idCurso, Guid idAlumno)
+    public async Task<AlumnosXCursos> IsAlumnoInCurso(Guid idCurso, Guid idAlumno)
     {
-        return await _contextDb.AlumnosXCursos
-            .AnyAsync(a => a.IdCurso == idCurso && a.IdAlumno == idAlumno);
+        var alumnoXcurso = await _contextDb.AlumnosXCursos
+            .Include(a => a.Alumno)
+            .Include(a => a.Curso)
+            .FirstOrDefaultAsync(a => a.IdAlumno == idAlumno && a.IdCurso ==idCurso);
+        return alumnoXcurso;
     }
 
     public async Task<AlumnosXCursos> DeleteAlumno(Guid idAlumno, Guid idCurso)

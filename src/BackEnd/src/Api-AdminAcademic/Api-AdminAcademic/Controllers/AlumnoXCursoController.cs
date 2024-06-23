@@ -30,6 +30,13 @@ public class AlumnoXCursoController : Controller
         return Ok(result);
     }
 
+    [HttpGet("alumnoXcursos/GetAlumnoEnCurso/{idCurso}/{idAlumno}")]
+    public async Task<IActionResult> GetAlumnoEnCurso(Guid idCurso, Guid idAlumno)
+    {
+        var result = await _alumnosXCursosService.GetAlumnoEnCurso(idCurso, idAlumno);
+        return Ok(result);
+    }
+
     [HttpPost("alumnosXcursos/Post"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Post([FromBody] NewAlumnoXCurso query)
     {
